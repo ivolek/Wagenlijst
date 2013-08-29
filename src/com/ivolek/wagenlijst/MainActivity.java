@@ -24,9 +24,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,9 +52,11 @@ public class MainActivity extends ListActivity {
 	List<Map<String, String>> busList = new ArrayList<Map<String,String>>();
 	SimpleAdapter simpleAdpt;
 	EditText Busnr;
+	public static Activity mainActivity;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
+		mainActivity = this;
 		setContentView(R.layout.activity_main);
 
 

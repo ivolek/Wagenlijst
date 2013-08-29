@@ -15,6 +15,7 @@ public final class R {
     }
     public static final class id {
         public static final int LinearLayout02=0x7f070017;
+        public static final int RelativeLayout1=0x7f07001a;
         public static final int ZoekButton=0x7f070002;
         public static final int bewerkenBouwjaar=0x7f07000f;
         public static final int bewerkenBusnr=0x7f070005;
@@ -26,16 +27,24 @@ public final class R {
         public static final int bewerkenSoort=0x7f070007;
         public static final int bewerkenTelefoon=0x7f070016;
         public static final int bewerkenType=0x7f07000d;
+        public static final int button1=0x7f07001b;
+        public static final int button2=0x7f07002c;
+        public static final int button3=0x7f07002e;
         public static final int buttonBewerken=0x7f070019;
-        public static final int buttonToevoegen=0x7f070027;
+        public static final int buttonToevoegen=0x7f070030;
         public static final int buttonVerwijderen=0x7f070018;
         public static final int buttonZoeken=0x7f070000;
+        public static final int hiddenEditText=0x7f07002f;
+        public static final int imageView1=0x7f07001c;
         public static final int listView=0x7f070003;
-        public static final int listview_singlewagen=0x7f07001c;
-        public static final int menu_bewerken=0x7f07001b;
-        public static final int menu_settings=0x7f070028;
-        public static final int menu_toevoegen=0x7f07001a;
+        public static final int listview_singlewagen=0x7f07001f;
+        public static final int menu_bewerken=0x7f07001e;
+        public static final int menu_settings=0x7f070031;
+        public static final int menu_toevoegen=0x7f07001d;
         public static final int textView1=0x7f070004;
+        public static final int textView10=0x7f07002a;
+        public static final int textView11=0x7f07002b;
+        public static final int textView12=0x7f07002d;
         public static final int textView2=0x7f070008;
         public static final int textView3=0x7f070006;
         public static final int textView4=0x7f07000a;
@@ -44,26 +53,27 @@ public final class R {
         public static final int textView7=0x7f070010;
         public static final int textView8=0x7f070012;
         public static final int textView9=0x7f070015;
-        public static final int toevoegenBouwjaar=0x7f070022;
-        public static final int toevoegenBusnr=0x7f07001d;
-        public static final int toevoegenChassisnummer=0x7f070023;
-        public static final int toevoegenKenteken=0x7f07001f;
-        public static final int toevoegenMaxpers=0x7f070025;
-        public static final int toevoegenMerk=0x7f070020;
-        public static final int toevoegenMotornummer=0x7f070024;
-        public static final int toevoegenSoort=0x7f07001e;
-        public static final int toevoegenTelefoon=0x7f070026;
-        public static final int toevoegenType=0x7f070021;
+        public static final int toevoegenBouwjaar=0x7f070025;
+        public static final int toevoegenBusnr=0x7f070020;
+        public static final int toevoegenChassisnummer=0x7f070026;
+        public static final int toevoegenKenteken=0x7f070022;
+        public static final int toevoegenMaxpers=0x7f070028;
+        public static final int toevoegenMerk=0x7f070023;
+        public static final int toevoegenMotornummer=0x7f070027;
+        public static final int toevoegenSoort=0x7f070021;
+        public static final int toevoegenTelefoon=0x7f070029;
+        public static final int toevoegenType=0x7f070024;
         public static final int zoekenBusNr=0x7f070001;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int bewerken_wagen=0x7f030001;
         public static final int listview=0x7f030002;
-        public static final int menu_lijst=0x7f030003;
-        public static final int menu_single=0x7f030004;
-        public static final int singlewagen=0x7f030005;
-        public static final int toevoegen_wagen=0x7f030006;
+        public static final int main=0x7f030003;
+        public static final int menu_lijst=0x7f030004;
+        public static final int menu_single=0x7f030005;
+        public static final int singlewagen=0x7f030006;
+        public static final int toevoegen_wagen=0x7f030007;
     }
     public static final class menu {
         public static final int activity_main=0x7f060000;

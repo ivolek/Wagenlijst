@@ -4,13 +4,12 @@
     android:layout_height="fill_parent" >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"         
-    android:focusable="true"
-    android:focusableInTouchMode="true">
-
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" >
+        
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -34,9 +33,9 @@
             android:id="@+id/toevoegenSoort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:ems="10"
             android:imeOptions="actionNext"
-            android:ems="10" />
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/textView2"
@@ -48,10 +47,10 @@
             android:id="@+id/toevoegenKenteken"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:ems="10"
             android:imeOptions="actionNext"
             android:inputType="textCapCharacters"
-            android:ems="10" />
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/textView4"
@@ -63,10 +62,10 @@
             android:id="@+id/toevoegenMerk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:ems="10"
             android:imeOptions="actionNext"
             android:inputType="textCapWords"
-            android:ems="10" />
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/textView5"
@@ -78,10 +77,10 @@
             android:id="@+id/toevoegenType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:ems="10"
             android:imeOptions="actionNext"
             android:inputType="textCapWords"
-            android:ems="10" />
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/textView6"
@@ -106,10 +105,10 @@
             android:id="@+id/toevoegenChassisnummer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:ems="10"
             android:imeOptions="actionNext"
             android:inputType="textCapCharacters"
-            android:ems="10" />
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/textView8"
@@ -121,10 +120,10 @@
             android:id="@+id/toevoegenMotornummer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:ems="10"
             android:imeOptions="actionNext"
             android:inputType="textCapCharacters"
-            android:ems="10" />
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/textView7"
@@ -152,12 +151,60 @@
             android:ems="10"
             android:inputType="phone" />
 
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="foto1" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="foto2" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="foto3" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+        
+        <EditText
+            android:id="@+id/hiddenEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+        
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button1"
+            android:layout_centerHorizontal="true" />
+
         <Button
             android:id="@+id/buttonToevoegen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Voeg toe" />
-
     </LinearLayout>
 
 </ScrollView>
