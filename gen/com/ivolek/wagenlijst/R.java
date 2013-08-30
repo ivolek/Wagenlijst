@@ -12,6 +12,7 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int image=0x7f020001;
     }
     public static final class id {
         public static final int LinearLayout02=0x7f070017;
@@ -74,6 +75,7 @@ public final class R {
         public static final int menu_single=0x7f030005;
         public static final int singlewagen=0x7f030006;
         public static final int toevoegen_wagen=0x7f030007;
+        public static final int zoomimage=0x7f030008;
     }
     public static final class menu {
         public static final int activity_main=0x7f060000;

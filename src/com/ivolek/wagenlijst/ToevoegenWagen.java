@@ -1,7 +1,12 @@
 package com.ivolek.wagenlijst;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,7 +20,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -23,9 +27,17 @@ import org.xml.sax.SAXException;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.hardware.Camera;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -43,12 +55,12 @@ public class ToevoegenWagen extends Activity {
 	private final int CAMERA_RESULT = 1;	
 	private final String Tag = getClass().getName();
 	ImageView imageView1;
+	Camera camera;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.toevoegen_wagen);
-
 		File file = new File(getFilesDir().toString() +  "/lijst.xml");
 		if(!file.exists())
 			createXML();
@@ -119,40 +131,189 @@ public class ToevoegenWagen extends Activity {
 
 		});
 	}
-
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
-		Log.i(Tag, "Receive the camera result");
-		System.out.println(" HET resultCode IS " + resultCode);
-		System.out.println(" HET RESULT OK CODE IS " + RESULT_OK);
-		System.out.println(" HET requestCode IS " + requestCode);
-		System.out.println(" HET CAMERA RESULT IS " + CAMERA_RESULT);
-		System.out.println(RESULT_OK); 
 		if (resultCode == RESULT_OK && requestCode == CAMERA_RESULT) {
 			File out = new File(getFilesDir(), "newImage.jpg");
-			Log.i(Tag, "STEP 1");
 			if(!out.exists()) {
-				Log.i(Tag, "Error while capturing image");
 				Toast.makeText(getBaseContext(),
 						"Error while capturing image", Toast.LENGTH_LONG)
 						.show();
-				return;				 
+				return;
 			}
 			else{
-				System.out.println("Het fotoId is !!!!!!!!!!! " + fotoId);
-				File niew = new File(getFilesDir(), Busnr.getText().toString() + hiddenEditText.getText().toString() + ".jpg");
-				out.renameTo(niew);
-				Log.i(Tag, "Changed the file name");
+				//try {
+					compressImage(getFilesDir() + "/newImage.jpg");
+				//} catch (IOException e) {
+					// TODO Auto-generated catch block
+				//	e.printStackTrace();
+				//}
 			}
 //			Bitmap mBitmap = BitmapFactory.decodeFile(out.getAbsolutePath());
 //			imageView1.setImageBitmap(mBitmap);
-		}
 
-		Log.i(Tag, "Receive the camera result");
+		}
+	}
+	
+//	public void copy() throws IOException {
+//	    InputStream in = new FileInputStream(getFilesDir() + "/newImage.jpg");
+////		Bitmap mBitmap = BitmapFactory.decodeStream(in);
+////		mBitmap = Bitmap.createScaledBitmap(mBitmap, 160, 160, true);
+//	    
+//	    OutputStream out = new FileOutputStream(getFilesDir() + "/" + Busnr.getText().toString() + hiddenEditText.getText().toString() + ".jpg");
+//
+//	    Bitmap mBitmap = BitmapFactory.decodeStream(in);
+//        mBitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
+//	    // Transfer bytes from in to out
+//	    byte[] buf = new byte[1024];
+//	    int len;
+//	    while ((len = in.read(buf)) > 0) {
+//	        out.write(buf, 0, len);
+//	    }
+//	    in.close();
+//	    out.close();
+//	}
+	
+	public String compressImage(String imageUri) {
+		
+		String filePath = getRealPathFromURI(imageUri);
+		Bitmap scaledBitmap = null;
+		
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;						
+		Bitmap bmp = BitmapFactory.decodeFile(filePath,options);
+		
+		int actualHeight = options.outHeight;
+		int actualWidth = options.outWidth;
+		float maxHeight = 816.0f;
+		float maxWidth = 612.0f;
+		float imgRatio = actualWidth / actualHeight;
+		float maxRatio = maxWidth / maxHeight;
+
+		if (actualHeight > maxHeight || actualWidth > maxWidth) {
+			if (imgRatio < maxRatio) {
+				imgRatio = maxHeight / actualHeight;
+				actualWidth = (int) (imgRatio * actualWidth);
+				actualHeight = (int) maxHeight;
+			} else if (imgRatio > maxRatio) {
+				imgRatio = maxWidth / actualWidth;
+				actualHeight = (int) (imgRatio * actualHeight);
+				actualWidth = (int) maxWidth;
+			} else {
+				actualHeight = (int) maxHeight;
+				actualWidth = (int) maxWidth;     
+				
+			}
+		}
+				
+		options.inSampleSize = calculateInSampleSize(options, actualWidth, actualHeight);
+		options.inJustDecodeBounds = false;
+		options.inDither = false;
+		options.inPurgeable = true;
+		options.inInputShareable = true;
+		options.inTempStorage = new byte[16*1024];
+			
+		try{	
+			bmp = BitmapFactory.decodeFile(filePath,options);
+		}
+		catch(OutOfMemoryError exception){
+			exception.printStackTrace();
+			
+		}
+		try{
+			scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
+		}
+		catch(OutOfMemoryError exception){
+			exception.printStackTrace();
+		}
+						
+		float ratioX = actualWidth / (float) options.outWidth;
+		float ratioY = actualHeight / (float)options.outHeight;
+		float middleX = actualWidth / 2.0f;
+		float middleY = actualHeight / 2.0f;
+			
+		Matrix scaleMatrix = new Matrix();
+		scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+		Canvas canvas = new Canvas(scaledBitmap);
+		canvas.setMatrix(scaleMatrix);
+		canvas.drawBitmap(bmp, middleX - bmp.getWidth()/2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+						
+		ExifInterface exif;
+		try {
+			exif = new ExifInterface(filePath);
+		
+			int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0);
+			Log.d("EXIF", "Exif: " + orientation);
+			Matrix matrix = new Matrix();
+			if (orientation == 6) {
+				matrix.postRotate(90);
+				Log.d("EXIF", "Exif: " + orientation);
+			} else if (orientation == 3) {
+				matrix.postRotate(180);
+				Log.d("EXIF", "Exif: " + orientation);
+			} else if (orientation == 8) {
+				matrix.postRotate(270);
+				Log.d("EXIF", "Exif: " + orientation);
+			}
+			scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		FileOutputStream out = null;
+		String filename = getFilename();
+		try {
+			out = new FileOutputStream(filename);
+			scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return filename;
 
 	}
+	
+	public String getFilename() {
+	    File file = new File(getFilesDir(), "Images");
+	    if (!file.exists()) {
+	        file.mkdirs();
+	    }
+	    String uriSting = (file.getAbsolutePath() + "/" +  Busnr.getText().toString() + hiddenEditText.getText().toString() + ".jpg");
+	    return uriSting;
+	 
+	}
+	
+	private String getRealPathFromURI(String contentURI) {
+        Uri contentUri = Uri.parse(contentURI);
+        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+        if (cursor == null) {
+            return contentUri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(index);
+        }
+    }
+	
+	public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+	    final int height = options.outHeight;
+	    final int width = options.outWidth;
+	    int inSampleSize = 1;
+	 
+	    if (height > reqHeight || width > reqWidth) {
+	        final int heightRatio = Math.round((float) height/ (float) reqHeight);
+	        final int widthRatio = Math.round((float) width / (float) reqWidth);
+	        inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;      }       final float totalPixels = width * height;       final float totalReqPixelsCap = reqWidth * reqHeight * 2;       while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
+	        inSampleSize++;
+	    }
+	 
+	    return inSampleSize;
+	}
+	
 
 	@Override
 	protected void onDestroy() {
@@ -330,6 +491,18 @@ public class ToevoegenWagen extends Activity {
 				Element Telefoon = doc.createElement("Telefoon");
 				Telefoon.appendChild(doc.createTextNode(this.Telefoon.getText().toString()));
 				Bus.appendChild(Telefoon);
+				
+				Element Foto1 = doc.createElement("Foto1");
+				Foto1.appendChild(doc.createTextNode(getFilesDir() + "/Images/" + Busnr.getText().toString() + "1.jpg"));
+				Bus.appendChild(Foto1);
+				
+				Element Foto2 = doc.createElement("Foto2");
+				Foto2.appendChild(doc.createTextNode(getFilesDir() + "/Images/" + Busnr.getText().toString() + "2.jpg"));
+				Bus.appendChild(Foto2);
+				
+				Element Foto3 = doc.createElement("Foto3");
+				Foto3.appendChild(doc.createTextNode(getFilesDir() + "/Images/" + Busnr.getText().toString() + "3.jpg"));
+				Bus.appendChild(Foto3);
 
 				// write the content into xml file
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();

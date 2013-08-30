@@ -1,5 +1,6 @@
 package com.ivolek.wagenlijst;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,10 +22,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SingleWagen extends Activity {
 
@@ -36,7 +39,7 @@ public class SingleWagen extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-createListView();
+		createListView();
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {
 			return;
@@ -69,6 +72,7 @@ createListView();
 
 					Element eElement = (Element) nNode;
 					if(Id == Integer.parseInt(eElement.getAttribute("id"))){						
+						data.add(createBusSpecs(eElement.getAttribute("id"), "Id"));
 						data.add(createBusSpecs(eElement.getElementsByTagName("Soort").item(0).getTextContent(), "Soort"));
 						data.add(createBusSpecs(eElement.getElementsByTagName("Kenteken").item(0).getTextContent(), "Kenteken"));
 						data.add(createBusSpecs(eElement.getElementsByTagName("Merk").item(0).getTextContent(), "Merk"));
@@ -78,9 +82,11 @@ createListView();
 						data.add(createBusSpecs(eElement.getElementsByTagName("Motornummer").item(0).getTextContent(), "Motornummer"));
 						data.add(createBusSpecs(eElement.getElementsByTagName("MaxPers").item(0).getTextContent(), "MaxPers"));
 						data.add(createBusSpecs(eElement.getElementsByTagName("Telefoon").item(0).getTextContent(), "Telefoon"));
-						
+						data.add(createBusSpecs(eElement.getElementsByTagName("Foto1").item(0).getTextContent(), "Foto1"));
+						data.add(createBusSpecs(eElement.getElementsByTagName("Foto2").item(0).getTextContent(), "Foto2"));
+						data.add(createBusSpecs(eElement.getElementsByTagName("Foto3").item(0).getTextContent(), "Foto3"));
+
 						createListView();
-						System.out.println("jawel");
 
 						BUSSPECS.add(0, eElement.getAttribute("id"));
 						BUSSPECS.add(1, eElement.getElementsByTagName("Soort").item(0).getTextContent());
@@ -100,23 +106,23 @@ createListView();
 			e.printStackTrace();
 		}
 	}
-	
+
 	private HashMap<String, String>createBusSpecs(String value, String name){
 		HashMap<String, String> busSpecs = new HashMap<String, String>();
 		busSpecs.put("titel", value);
 		busSpecs.put("sub", name);
 		return busSpecs;
 	}
-	
+
 	public void createListView(){
 
 
-//		Map<String, String> datum = new HashMap<String, String>(2);
-//		for (int i=0; i<10; i++) {
-//			datum.put("title", titel);
-//			datum.put("date", "date");
-//			data.add(datum);
-//		}
+		//		Map<String, String> datum = new HashMap<String, String>(2);
+		//		for (int i=0; i<10; i++) {
+		//			datum.put("title", titel);
+		//			datum.put("date", "date");
+		//			data.add(datum);
+		//		}
 		setContentView(R.layout.singlewagen);
 		ListView itemlist = (ListView) findViewById(R.id.listview_singlewagen);
 		SimpleAdapter adapter = new SimpleAdapter(this, data,
@@ -125,6 +131,51 @@ createListView();
 				new int[] {android.R.id.text1,
 				android.R.id.text2});
 		itemlist.setAdapter(adapter);
+
+		itemlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parentAdapter, View view, int position,
+					long id) {
+				if(id == 10 || id == 11 || id == 12){
+					Intent i = new Intent(getApplicationContext(), FotoPincher.class);
+					File out;
+					System.out.println("the id i give is "+ id);
+					switch ((int) id){
+					
+					case 10:  
+						out = new File(getFilesDir(), "/Images/"  + BUSSPECS.get(0) + "1.jpg");
+						if(!out.exists()){
+							Toast.makeText(getBaseContext(), "Bevat nog geen foto.", Toast.LENGTH_SHORT).show();
+							break;
+						}
+						i.putExtra("image", BUSSPECS.get(0) +  "1");
+						startActivity(i);
+						break;
+						
+					case 11:
+						out = new File(getFilesDir(), "/Images/"  + BUSSPECS.get(0) + "2.jpg");
+						if(!out.exists()){
+							Toast.makeText(getBaseContext(), "Bevat nog geen foto.", Toast.LENGTH_SHORT).show();
+							break;
+						}
+						i.putExtra("image", BUSSPECS.get(0) +  "2");
+						startActivity(i);
+						break;
+						
+					case 12: 
+						out = new File(getFilesDir(), "/Images/"  + BUSSPECS.get(0) + "3.jpg");
+						if(!out.exists()){
+							Toast.makeText(getBaseContext(), "Bevat nog geen foto.", Toast.LENGTH_SHORT).show();
+							break;
+						}
+						i.putExtra("image", BUSSPECS.get(0) +  "3");
+						startActivity(i);
+						break;
+
+					}
+				}
+			}
+		});
 	}
 
 	@Override
@@ -133,7 +184,7 @@ createListView();
 		getMenuInflater().inflate(R.layout.menu_single, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
