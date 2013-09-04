@@ -50,7 +50,7 @@ import android.widget.Toast;
 public class ToevoegenWagen extends Activity {
 
 	EditText Busnr, Bouwjaar, Chassisnummer, Kenteken, MaxPers, Merk, Motornummer, Soort, Telefoon, Type, hiddenEditText;
-	Button button1, button2, button3, buttonToevoegen;
+	Button buttonFoto1Maken, buttonFoto2Maken, buttonFoto3Maken, buttonFoto1Bekijken, buttonFoto2Bekijken, buttonFoto3Bekijken, buttonToevoegen;
 	int fotoId;
 	private final int CAMERA_RESULT = 1;	
 	private final String Tag = getClass().getName();
@@ -75,15 +75,15 @@ public class ToevoegenWagen extends Activity {
 		Soort = (EditText) findViewById(R.id.toevoegenSoort);
 		Telefoon = (EditText) findViewById(R.id.toevoegenTelefoon);
 		Type = (EditText) findViewById(R.id.toevoegenType);
-		
+
 		hiddenEditText = (EditText) findViewById(R.id.hiddenEditText);
 		imageView1 = (ImageView)findViewById(R.id.imageView1);
 
-		button1 = (Button) findViewById(R.id.button1);
-		button2 = (Button) findViewById(R.id.button2);
-		button3 = (Button) findViewById(R.id.button3);
-		
-		button1.setOnClickListener(new OnClickListener()
+		buttonFoto1Maken = (Button) findViewById(R.id.buttonFoto1Maken);
+		buttonFoto2Maken = (Button) findViewById(R.id.buttonFoto2Maken);
+		buttonFoto3Maken = (Button) findViewById(R.id.buttonFoto3Maken);
+
+		buttonFoto1Maken.setOnClickListener(new OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
@@ -91,8 +91,8 @@ public class ToevoegenWagen extends Activity {
 			cameraActivate();		
 			}
 		});
-		
-		button2.setOnClickListener(new OnClickListener()
+
+		buttonFoto2Maken.setOnClickListener(new OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
@@ -100,8 +100,8 @@ public class ToevoegenWagen extends Activity {
 			cameraActivate();
 			}
 		});
-		
-		button3.setOnClickListener(new OnClickListener()
+
+		buttonFoto3Maken.setOnClickListener(new OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
@@ -111,6 +111,87 @@ public class ToevoegenWagen extends Activity {
 			}
 
 		});
+
+
+
+		buttonFoto1Bekijken = (Button) findViewById(R.id.buttonFoto1Bekijken);
+		buttonFoto2Bekijken = (Button) findViewById(R.id.buttonFoto2Bekijken);
+		buttonFoto3Bekijken = (Button) findViewById(R.id.buttonFoto3Bekijken);
+
+		buttonFoto1Bekijken.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if(!Busnr.getText().toString().matches("")){
+					if(XMLcheckIdFree()){
+						File foto3 = new File(getFilesDir(), "/Images/" + Busnr.getText().toString() + "1.jpg");
+						if(foto3.exists()) {
+						Intent i = new Intent(getApplicationContext(), FotoPincher.class);
+						i.putExtra("image", Busnr.getText().toString() +  "1");
+						startActivity(i);
+						}
+						else
+							Toast.makeText(getBaseContext(), "Maak eerst een foto.", Toast.LENGTH_LONG).show();
+							
+					}
+					else
+						Toast.makeText(getBaseContext(), "Busnr bestaat al.", Toast.LENGTH_LONG).show();
+				}
+				else 
+					Toast.makeText(getBaseContext(), "Voer eerst een busnummer in.", Toast.LENGTH_LONG).show();
+			}
+
+		});
+		buttonFoto2Bekijken.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if(!Busnr.getText().toString().matches("")){
+					if(XMLcheckIdFree()){
+						File foto3 = new File(getFilesDir(), "/Images/" + Busnr.getText().toString() + "2.jpg");
+						if(foto3.exists()) {
+						Intent i = new Intent(getApplicationContext(), FotoPincher.class);
+						i.putExtra("image", Busnr.getText().toString() +  "2");
+						startActivity(i);
+						}
+						else
+							Toast.makeText(getBaseContext(), "Maak eerst een foto.", Toast.LENGTH_LONG).show();
+					}
+					else
+						Toast.makeText(getBaseContext(), "Busnr bestaat al.", Toast.LENGTH_LONG).show();
+				}
+				else 
+					Toast.makeText(getBaseContext(), "Voer eerst een busnummer in.", Toast.LENGTH_LONG).show();
+			}
+
+		});
+		buttonFoto3Bekijken.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{					
+				if(!Busnr.getText().toString().matches("")){
+					if(XMLcheckIdFree()){
+						File foto3 = new File(getFilesDir(), "/Images/" + Busnr.getText().toString() + "3.jpg");
+						if(foto3.exists()) {
+						Intent i = new Intent(getApplicationContext(), FotoPincher.class);
+						i.putExtra("image", Busnr.getText().toString() +  "3");
+						startActivity(i);
+						}
+						else
+							Toast.makeText(getBaseContext(), "Maak eerst een foto.", Toast.LENGTH_LONG).show();
+					}
+					else
+						Toast.makeText(getBaseContext(), "Busnr bestaat al.", Toast.LENGTH_LONG).show();
+				}
+				else 
+					Toast.makeText(getBaseContext(), "Voer eerst een busnummer in.", Toast.LENGTH_LONG).show();
+			}
+
+		});
+
 		buttonToevoegen = (Button) findViewById(R.id.buttonToevoegen);
 
 		buttonToevoegen.setOnClickListener(new OnClickListener()
@@ -130,8 +211,22 @@ public class ToevoegenWagen extends Activity {
 			}
 
 		});
+//		File foto1 = new File(getFilesDir(), "/Images/" + Busnr.getText().toString() + "1.jpg");
+//		if(foto1.exists()) {
+//			System.out.println("foto bestaat heeeeujjj!");
+//			buttonFoto1Bekijken.setVisibility(View.VISIBLE);
+//		}
+//		File foto2 = new File(getFilesDir(), "/Images/" + Busnr.getText().toString() + "2.jpg");
+//		if(foto2.exists()) {
+//			buttonFoto2Bekijken.setVisibility(View.VISIBLE);
+//		}
+//		File foto3 = new File(getFilesDir(), "/Images/" + Busnr.getText().toString() + "3.jpg");
+//		if(foto3.exists()) {
+//			buttonFoto3Bekijken.setVisibility(View.VISIBLE);
+//		}
+		
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -145,46 +240,46 @@ public class ToevoegenWagen extends Activity {
 			}
 			else{
 				//try {
-					compressImage(getFilesDir() + "/newImage.jpg");
+				compressImage(getFilesDir() + "/newImage.jpg");
 				//} catch (IOException e) {
-					// TODO Auto-generated catch block
+				// TODO Auto-generated catch block
 				//	e.printStackTrace();
 				//}
 			}
-//			Bitmap mBitmap = BitmapFactory.decodeFile(out.getAbsolutePath());
-//			imageView1.setImageBitmap(mBitmap);
+			//			Bitmap mBitmap = BitmapFactory.decodeFile(out.getAbsolutePath());
+			//			imageView1.setImageBitmap(mBitmap);
 
 		}
 	}
-	
-//	public void copy() throws IOException {
-//	    InputStream in = new FileInputStream(getFilesDir() + "/newImage.jpg");
-////		Bitmap mBitmap = BitmapFactory.decodeStream(in);
-////		mBitmap = Bitmap.createScaledBitmap(mBitmap, 160, 160, true);
-//	    
-//	    OutputStream out = new FileOutputStream(getFilesDir() + "/" + Busnr.getText().toString() + hiddenEditText.getText().toString() + ".jpg");
-//
-//	    Bitmap mBitmap = BitmapFactory.decodeStream(in);
-//        mBitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
-//	    // Transfer bytes from in to out
-//	    byte[] buf = new byte[1024];
-//	    int len;
-//	    while ((len = in.read(buf)) > 0) {
-//	        out.write(buf, 0, len);
-//	    }
-//	    in.close();
-//	    out.close();
-//	}
-	
+
+	//	public void copy() throws IOException {
+	//	    InputStream in = new FileInputStream(getFilesDir() + "/newImage.jpg");
+	////		Bitmap mBitmap = BitmapFactory.decodeStream(in);
+	////		mBitmap = Bitmap.createScaledBitmap(mBitmap, 160, 160, true);
+	//	    
+	//	    OutputStream out = new FileOutputStream(getFilesDir() + "/" + Busnr.getText().toString() + hiddenEditText.getText().toString() + ".jpg");
+	//
+	//	    Bitmap mBitmap = BitmapFactory.decodeStream(in);
+	//        mBitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
+	//	    // Transfer bytes from in to out
+	//	    byte[] buf = new byte[1024];
+	//	    int len;
+	//	    while ((len = in.read(buf)) > 0) {
+	//	        out.write(buf, 0, len);
+	//	    }
+	//	    in.close();
+	//	    out.close();
+	//	}
+
 	public String compressImage(String imageUri) {
-		
+
 		String filePath = getRealPathFromURI(imageUri);
 		Bitmap scaledBitmap = null;
-		
+
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;						
 		Bitmap bmp = BitmapFactory.decodeFile(filePath,options);
-		
+
 		int actualHeight = options.outHeight;
 		int actualWidth = options.outWidth;
 		float maxHeight = 816.0f;
@@ -204,23 +299,23 @@ public class ToevoegenWagen extends Activity {
 			} else {
 				actualHeight = (int) maxHeight;
 				actualWidth = (int) maxWidth;     
-				
+
 			}
 		}
-				
+
 		options.inSampleSize = calculateInSampleSize(options, actualWidth, actualHeight);
 		options.inJustDecodeBounds = false;
 		options.inDither = false;
 		options.inPurgeable = true;
 		options.inInputShareable = true;
 		options.inTempStorage = new byte[16*1024];
-			
+
 		try{	
 			bmp = BitmapFactory.decodeFile(filePath,options);
 		}
 		catch(OutOfMemoryError exception){
 			exception.printStackTrace();
-			
+
 		}
 		try{
 			scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
@@ -228,12 +323,12 @@ public class ToevoegenWagen extends Activity {
 		catch(OutOfMemoryError exception){
 			exception.printStackTrace();
 		}
-						
+
 		float ratioX = actualWidth / (float) options.outWidth;
 		float ratioY = actualHeight / (float)options.outHeight;
 		float middleX = actualWidth / 2.0f;
 		float middleY = actualHeight / 2.0f;
-			
+
 		Matrix scaleMatrix = new Matrix();
 		scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
 
@@ -241,11 +336,11 @@ public class ToevoegenWagen extends Activity {
 		canvas.setMatrix(scaleMatrix);
 		canvas.drawBitmap(bmp, middleX - bmp.getWidth()/2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
 
-						
+
 		ExifInterface exif;
 		try {
 			exif = new ExifInterface(filePath);
-		
+
 			int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0);
 			Log.d("EXIF", "Exif: " + orientation);
 			Matrix matrix = new Matrix();
@@ -268,59 +363,60 @@ public class ToevoegenWagen extends Activity {
 		try {
 			out = new FileOutputStream(filename);
 			scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		return filename;
 
 	}
-	
+
 	public String getFilename() {
-	    File file = new File(getFilesDir(), "Images");
-	    if (!file.exists()) {
-	        file.mkdirs();
-	    }
-	    String uriSting = (file.getAbsolutePath() + "/" +  Busnr.getText().toString() + hiddenEditText.getText().toString() + ".jpg");
-	    return uriSting;
-	 
+		File file = new File(getFilesDir(), "Images");
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		String uriSting = (file.getAbsolutePath() + "/" +  Busnr.getText().toString() + hiddenEditText.getText().toString() + ".jpg");
+	    //bekijkenVisible(Integer.parseInt(hiddenEditText.getText().toString()));
+		return uriSting;
+
 	}
-	
+
 	private String getRealPathFromURI(String contentURI) {
-        Uri contentUri = Uri.parse(contentURI);
-        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
-        if (cursor == null) {
-            return contentUri.getPath();
-        } else {
-            cursor.moveToFirst();
-            int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            return cursor.getString(index);
-        }
-    }
-	
-	public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-	    final int height = options.outHeight;
-	    final int width = options.outWidth;
-	    int inSampleSize = 1;
-	 
-	    if (height > reqHeight || width > reqWidth) {
-	        final int heightRatio = Math.round((float) height/ (float) reqHeight);
-	        final int widthRatio = Math.round((float) width / (float) reqWidth);
-	        inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;      }       final float totalPixels = width * height;       final float totalReqPixelsCap = reqWidth * reqHeight * 2;       while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
-	        inSampleSize++;
-	    }
-	 
-	    return inSampleSize;
+		Uri contentUri = Uri.parse(contentURI);
+		Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+		if (cursor == null) {
+			return contentUri.getPath();
+		} else {
+			cursor.moveToFirst();
+			int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+			return cursor.getString(index);
+		}
 	}
-	
+
+	public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
+
+		if (height > reqHeight || width > reqWidth) {
+			final int heightRatio = Math.round((float) height/ (float) reqHeight);
+			final int widthRatio = Math.round((float) width / (float) reqWidth);
+			inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;      }       final float totalPixels = width * height;       final float totalReqPixelsCap = reqWidth * reqHeight * 2;       while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
+				inSampleSize++;
+			}
+
+			return inSampleSize;
+	}
+
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		imageView1 = null;
 	}
-	
+
 	public void cameraActivate(){
 		if(!Busnr.getText().toString().matches("")){
 			if(XMLcheckIdFree()){
@@ -491,15 +587,15 @@ public class ToevoegenWagen extends Activity {
 				Element Telefoon = doc.createElement("Telefoon");
 				Telefoon.appendChild(doc.createTextNode(this.Telefoon.getText().toString()));
 				Bus.appendChild(Telefoon);
-				
+
 				Element Foto1 = doc.createElement("Foto1");
 				Foto1.appendChild(doc.createTextNode(getFilesDir() + "/Images/" + Busnr.getText().toString() + "1.jpg"));
 				Bus.appendChild(Foto1);
-				
+
 				Element Foto2 = doc.createElement("Foto2");
 				Foto2.appendChild(doc.createTextNode(getFilesDir() + "/Images/" + Busnr.getText().toString() + "2.jpg"));
 				Bus.appendChild(Foto2);
-				
+
 				Element Foto3 = doc.createElement("Foto3");
 				Foto3.appendChild(doc.createTextNode(getFilesDir() + "/Images/" + Busnr.getText().toString() + "3.jpg"));
 				Bus.appendChild(Foto3);
@@ -608,5 +704,4 @@ public class ToevoegenWagen extends Activity {
 		//			tfe.printStackTrace();
 		//		  }
 	}
-
 }

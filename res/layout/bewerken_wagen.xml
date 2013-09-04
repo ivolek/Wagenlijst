@@ -4,7 +4,6 @@
     android:layout_height="fill_parent" >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
@@ -152,6 +151,90 @@
             android:ems="10"
             android:inputType="phone" />
 
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Foto1" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" >
+
+            <Button
+                android:id="@+id/buttonFoto1Bewerken"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="Bewerken"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/buttonFoto1Bekijken"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bekijken" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Foto2" />
+                <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" >
+
+            <Button
+                android:id="@+id/buttonFoto2Bewerken"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="Bewerken"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/buttonFoto2Bekijken"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bekijken" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Foto3" />
+                      <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" >
+
+            <Button
+                android:id="@+id/buttonFoto3Bewerken"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="Bewerken"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/buttonFoto3Bekijken"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bekijken" />
+        </LinearLayout>
+        
+        <EditText
+            android:id="@+id/hiddenEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+        
         <LinearLayout
             android:id="@+id/LinearLayout02"
             android:layout_width="fill_parent"
@@ -162,8 +245,8 @@
                 android:id="@+id/buttonVerwijderen"
                 android:layout_width="102dp"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="Verwijder" />
+                android:text="Verwijder"
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/buttonBewerken"

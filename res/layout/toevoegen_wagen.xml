@@ -157,11 +157,26 @@
             android:layout_height="wrap_content"
             android:text="foto1" />
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
+  <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:layout_alignParentBottom="true" >
+
+            <Button
+                android:id="@+id/buttonFoto1Maken"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="Foto maken"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/buttonFoto1Bekijken"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bekijken" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView11"
@@ -169,11 +184,26 @@
             android:layout_height="wrap_content"
             android:text="foto2" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
+  <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:layout_alignParentBottom="true" >
+
+            <Button
+                android:id="@+id/buttonFoto2Maken"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="Foto maken"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/buttonFoto2Bekijken"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bekijken" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView12"
@@ -181,11 +211,26 @@
             android:layout_height="wrap_content"
             android:text="foto3" />
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
+  <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:layout_alignParentBottom="true" >
+
+            <Button
+                android:id="@+id/buttonFoto3Maken"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="Foto maken"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/buttonFoto3Bekijken"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bekijken" />
+        </LinearLayout>
         
         <EditText
             android:id="@+id/hiddenEditText"
